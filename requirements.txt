@@ -1,0 +1,15 @@
+Django==5.2
+bleach==6.2.0
+webencodings==0.5.1
+channels
+channels-redis
+django-crispy-forms
+crispy-bootstrap5
+Pillow
+stripe
+razorpay
+reportlab
+setuptools
+psycopg2-binary
+gunicorn
+whitenoise
