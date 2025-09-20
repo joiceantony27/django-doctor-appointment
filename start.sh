@@ -6,14 +6,36 @@ set -e
 
 echo "Starting Django Doctor Appointment System..."
 
-# Wait for database to be ready (if using external database)
-if [ -n "$DB_HOST" ]; then
-    echo "Waiting for database..."
-    while ! nc -z $DB_HOST $DB_PORT; do
-        sleep 1
-    done
-    echo "Database is ready!"
-fi
+# Wait for database to be ready (Azure PostgreSQL)
+echo "Waiting for database connection..."
+python -c "
+import os
+import psycopg2
+import time
+from urllib.parse import urlparse
+
+database_url = os.environ.get('DATABASE_URL')
+if database_url:
+    parsed = urlparse(database_url)
+    for i in range(30):
+        try:
+            conn = psycopg2.connect(
+                host=parsed.hostname,
+                port=parsed.port,
+                user=parsed.username,
+                password=parsed.password,
+                database=parsed.path[1:]
+            )
+            conn.close()
+            print('Database connection successful!')
+            break
+        except Exception as e:
+            print(f'Database connection attempt {i+1}/30 failed: {e}')
+            time.sleep(2)
+    else:
+        print('Failed to connect to database after 30 attempts')
+        exit(1)
+"
 
 # Run migrations
 echo "Running migrations..."

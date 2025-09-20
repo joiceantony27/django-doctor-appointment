@@ -16,7 +16,12 @@ DEBUG = False
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-tz!67d19eip1v5cq99lkm918#7l_c%_n698*6_wa2l^+q@a)h7')
 
 # Allowed hosts for production
-ALLOWED_HOSTS = ['*']  # Configure this properly for your domain
+ALLOWED_HOSTS = [
+    'django-doctor-appointment.azurewebsites.net',
+    'localhost',
+    '127.0.0.1',
+    '.azurewebsites.net'
+]
 
 # Database configuration for production
 import dj_database_url
@@ -30,6 +35,21 @@ DATABASES = {
 # Static files configuration for production
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Add WhiteNoise for static file serving
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add this
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+# WhiteNoise configuration
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files configuration
 MEDIA_URL = '/media/'
