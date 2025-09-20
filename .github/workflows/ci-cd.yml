@@ -7,10 +7,10 @@ on:
     branches: [ main ]
 
 env:
-  ACR_NAME: myregistry
-  AZURE_WEBAPP_NAME: mydoctorapp
-  AZURE_RESOURCE_GROUP: myResourceGroup
-  IMAGE_NAME: doctorapp
+  ACR_NAME: doctorappregistry
+  AZURE_WEBAPP_NAME: django-doctor-appointment
+  AZURE_RESOURCE_GROUP: doctor-app-rg
+  IMAGE_NAME: doctor-appointment-app
   CONTAINER_NAME: doctor-appointment
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
       uses: docker/setup-buildx-action@v3
 
     - name: Log in to Azure Container Registry
-      uses: azure/docker-login@v1
+      uses: azure/docker-login@v2
       with:
         login-server: ${{ env.ACR_NAME }}.azurecr.io
         username: ${{ secrets.ACR_USERNAME }}
@@ -54,18 +54,18 @@ jobs:
         cache-to: type=gha,mode=max
 
     - name: Azure Login
-      uses: azure/login@v1
+      uses: azure/login@v2
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: Deploy to Azure Web App
-      uses: azure/webapps-deploy@v2
+      uses: azure/webapps-deploy@v3
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        images: ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        images: ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:latest
 
     - name: Configure App Settings
-      uses: azure/CLI@v1
+      uses: azure/CLI@v2
       with:
         inlineScript: |
           az webapp config appsettings set \
@@ -76,10 +76,15 @@ jobs:
               DOCKER_REGISTRY_SERVER_URL=https://${{ env.ACR_NAME }}.azurecr.io \
               DOCKER_REGISTRY_SERVER_USERNAME=${{ secrets.ACR_USERNAME }} \
               DOCKER_REGISTRY_SERVER_PASSWORD=${{ secrets.ACR_PASSWORD }} \
-              DOCKER_ENABLE_CI=true
+              DOCKER_ENABLE_CI=true \
+              SECRET_KEY="${{ secrets.DJANGO_SECRET_KEY }}" \
+              DEBUG=False \
+              ALLOWED_HOSTS="${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net,localhost,127.0.0.1" \
+              DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+              WEBSITES_ENABLE_APP_SERVICE_STORAGE=false
 
     - name: Restart Web App
-      uses: azure/CLI@v1
+      uses: azure/CLI@v2
       with:
         inlineScript: |
           az webapp restart \
