@@ -1,0 +1,21 @@
+# Minimal Azure-specific Dockerfile
+FROM python:3.11-slim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Set work directory
+WORKDIR /app
+
+# Install Django and Gunicorn
+RUN pip install django==4.2.7 gunicorn==21.2.0
+
+# Copy minimal Azure app
+COPY azure_app.py /app/
+
+# Expose port
+EXPOSE 8000
+
+# Start with Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--timeout", "600", "--workers", "2", "azure_app:application"]

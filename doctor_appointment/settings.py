@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tz!67d19eip1v5cq99lkm918#7l_c%_n698*6_wa2l^+q@a)h7'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-tz!67d19eip1v5cq99lkm918#7l_c%_n698*6_wa2l^+q@a)h7')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['django-doctor-appointment.azurewebsites.net', 'localhost', '127.0.0.1', '*']
 
 
 # Application definition
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -124,6 +125,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'appointments', 'static'),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# WhiteNoise configuration for static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Create static directory if it doesn't exist
 if not os.path.exists(os.path.join(BASE_DIR, 'static')):
