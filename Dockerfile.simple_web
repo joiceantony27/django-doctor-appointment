@@ -1,0 +1,17 @@
+# Simple Python web server for deployment testing
+FROM python:3.11-slim
+
+# Set work directory
+WORKDIR /app
+
+# Copy simple web server
+COPY simple_web.py /app/
+
+# Make it executable
+RUN chmod +x simple_web.py
+
+# Expose port
+EXPOSE 8000
+
+# Start the simple web server
+CMD ["python3", "simple_web.py"]
