@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-tz!67d19eip1v5cq99lkm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django-doctor-appointment.azurewebsites.net', 'localhost', '127.0.0.1', '.azurewebsites.net']
+ALLOWED_HOSTS = ['django-doctor-appointment.azurewebsites.net', 'localhost', '127.0.0.1', '.azurewebsites.net', '*']
 
 
 # Application definition
