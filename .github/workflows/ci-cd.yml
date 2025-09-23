@@ -81,7 +81,7 @@ jobs:
               ALLOWED_HOSTS="*" \
               DATABASE_URL="${{ secrets.DATABASE_URL }}" \
               WEBSITES_ENABLE_APP_SERVICE_STORAGE=false \
-              DJANGO_SETTINGS_MODULE=doctor_appointment.settings
+              DJANGO_SETTINGS_MODULE=doctor_appointment.settings_minimal
 
     - name: Restart Web App
       uses: azure/CLI@v2
