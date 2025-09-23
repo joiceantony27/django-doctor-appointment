@@ -81,7 +81,8 @@ jobs:
               DEBUG=False \
               ALLOWED_HOSTS="${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net,localhost,127.0.0.1" \
               DATABASE_URL="${{ secrets.DATABASE_URL }}" \
-              WEBSITES_ENABLE_APP_SERVICE_STORAGE=false
+              WEBSITES_ENABLE_APP_SERVICE_STORAGE=false \
+              DJANGO_SETTINGS_MODULE=doctor_appointment.settings_production
 
     - name: Restart Web App
       uses: azure/CLI@v2
