@@ -1,0 +1,5 @@
+<step title="Incoming Request" date="2025-09-18T12:42:41.901" instance="cadad9" url="/logstream" method="GET" type="request" pid="770,1,7" Host="django-doctor-appointment.scm.azurewebsites.net" User-Agent="AZURECLI/2.77.0 (DEB)" Accept-Encoding="identity" Authorization="Bea..." x-ms-client-request-id="692a050e-948c-11f0-a486-080027cf2e9d" X-ARR-LOG-ID="692a050e-948c-11f0-a486-080027cf2e9d" CLIENT-IP="14.97.173.201:39766" X-SITE-DEPLOYMENT-ID="django-doctor-appointment" WAS-DEFAULT-HOSTNAME="django-doctor-appointment.scm.azurewebsites.net" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/logstream" X-Client-IP="14.97.173.201" X-Client-Port="39766" >
+  <step title="LogStreamHandlerMiddleware.Invoke" date="2025-09-18T12:42:41.932" /><!-- duration: 97ms -->
+  <step title="Error occurred" date="2025-09-18T12:49:42.058" type="error" text="LogStreamManager: ProcessRequest end" /><!-- duration: 34ms -->
+  <step title="Outgoing response" date="2025-09-18T12:49:42.119" type="response" statusCode="200" statusText="OK" /><!-- duration: 3ms -->
+</step><!-- duration: 420224ms -->

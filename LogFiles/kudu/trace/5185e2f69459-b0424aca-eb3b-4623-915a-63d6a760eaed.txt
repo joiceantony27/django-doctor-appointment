@@ -1,0 +1,1 @@
+2025-09-18T13:13:42  Startup Request, url: /detectors, method: GET, type: request, pid: 767,1,18, ScmType: None
