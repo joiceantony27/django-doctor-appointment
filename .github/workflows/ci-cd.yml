@@ -46,7 +46,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
-        file: ./Dockerfile.production
+        file: ./Dockerfile.simple
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
@@ -77,7 +77,7 @@ jobs:
               DOCKER_REGISTRY_SERVER_PASSWORD=${{ secrets.ACR_PASSWORD }} \
               DOCKER_ENABLE_CI=true \
               SECRET_KEY="${{ secrets.DJANGO_SECRET_KEY }}" \
-              DEBUG=False \
+              DEBUG=True \
               ALLOWED_HOSTS="${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net,localhost,127.0.0.1" \
               DATABASE_URL="${{ secrets.DATABASE_URL }}" \
               WEBSITES_ENABLE_APP_SERVICE_STORAGE=false \
