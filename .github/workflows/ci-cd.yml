@@ -46,7 +46,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
-        file: ./Dockerfile.simple_web
+        file: ./Dockerfile.minimal
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
@@ -78,10 +78,10 @@ jobs:
               DOCKER_ENABLE_CI=true \
               SECRET_KEY="${{ secrets.DJANGO_SECRET_KEY }}" \
               DEBUG=True \
-              ALLOWED_HOSTS="*" \
+              ALLOWED_HOSTS="django-doctor-appointment.azurewebsites.net,localhost,127.0.0.1,*" \
               DATABASE_URL="${{ secrets.DATABASE_URL }}" \
               WEBSITES_ENABLE_APP_SERVICE_STORAGE=false \
-              DJANGO_SETTINGS_MODULE=doctor_appointment.settings_minimal
+              DJANGO_SETTINGS_MODULE="doctor_appointment.settings"
 
     - name: Restart Web App
       uses: azure/CLI@v2

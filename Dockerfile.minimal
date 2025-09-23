@@ -27,5 +27,9 @@ RUN mkdir -p /app/staticfiles /app/media
 # Expose port
 EXPOSE 8000
 
-# Run migrations and start the application with minimal settings
-CMD ["sh", "-c", "python manage.py migrate --settings=doctor_appointment.settings_minimal && python manage.py collectstatic --noinput --settings=doctor_appointment.settings_minimal && gunicorn --bind 0.0.0.0:8000 --timeout 120 --env DJANGO_SETTINGS_MODULE=doctor_appointment.settings_minimal doctor_appointment.wsgi:application"]
+# Run migrations and collect static files
+RUN python manage.py migrate --settings=doctor_appointment.settings --noinput
+RUN python manage.py collectstatic --settings=doctor_appointment.settings --noinput
+
+# Start Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--timeout", "120", "doctor_appointment.wsgi:application", "--env", "DJANGO_SETTINGS_MODULE=doctor_appointment.settings"]
