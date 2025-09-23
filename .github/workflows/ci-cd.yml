@@ -78,7 +78,7 @@ jobs:
               DOCKER_ENABLE_CI=true \
               SECRET_KEY="${{ secrets.DJANGO_SECRET_KEY }}" \
               DEBUG=True \
-              ALLOWED_HOSTS="${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net,localhost,127.0.0.1" \
+              ALLOWED_HOSTS="*" \
               DATABASE_URL="${{ secrets.DATABASE_URL }}" \
               WEBSITES_ENABLE_APP_SERVICE_STORAGE=false \
               DJANGO_SETTINGS_MODULE=doctor_appointment.settings
