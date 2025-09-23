@@ -62,8 +62,12 @@ def is_admin(user):
     return user.user_type == 'admin'
 
 def home(request):
-    doctors = Doctor.objects.filter(is_available=True)[:6]
-    return render(request, 'appointments/home.html', {'doctors': doctors})
+    try:
+        doctors = Doctor.objects.filter(is_available=True)[:6]
+        return render(request, 'appointments/home.html', {'doctors': doctors})
+    except Exception as e:
+        # Fallback to simple template if there are issues
+        return render(request, 'appointments/simple_home.html', {'doctors': []})
 
 def custom_logout(request):
     logout(request)
