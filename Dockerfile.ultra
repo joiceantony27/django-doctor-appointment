@@ -1,0 +1,21 @@
+# Ultra-minimal Dockerfile for Django deployment
+FROM python:3.11-slim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Set work directory
+WORKDIR /app
+
+# Install minimal dependencies
+RUN pip install django gunicorn
+
+# Copy minimal app
+COPY minimal_app.py /app/
+
+# Expose port
+EXPOSE 8000
+
+# Start the minimal application
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--timeout", "120", "minimal_app:application"]
