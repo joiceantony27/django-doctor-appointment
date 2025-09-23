@@ -1,0 +1,34 @@
+{
+  "name": "Django Doctor Appointment System",
+  "description": "A comprehensive Django web application for managing doctor appointments",
+  "repository": "https://github.com/joiceantony27/django-doctor-appointment",
+  "keywords": ["django", "python", "healthcare", "appointments", "web-app"],
+  "env": {
+    "SECRET_KEY": {
+      "description": "Django secret key for security",
+      "generator": "secret"
+    },
+    "DEBUG": {
+      "description": "Django debug mode",
+      "value": "False"
+    },
+    "ALLOWED_HOSTS": {
+      "description": "Allowed hosts for Django",
+      "value": "*"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "addons": [
+    "heroku-postgresql:mini"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
+}
